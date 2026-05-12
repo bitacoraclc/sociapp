@@ -7,304 +7,292 @@
 <title>Escala de Integración Social</title>
 <style>
 :root{
-  --titulo-size:16px;--etiqueta-size:12px;--input-size:14px;--nombre-size:13px;
-  --header-size:11px;--btn-size:14px;--sec-title-size:14px;--credit-size:10px;--toast-size:12px;
-  --bg:#0b1120;--panel:#1e293b;--input:#334155;--btn:#3b82f6;--add:#10b981;--del:#f87171;
-  --txt:#e2e8f0;--muted:#94a3b8;--option-a:#22c55e;--option-b:#3b82f6;--option-c:#f59e0b;--option-d:#ef4444;--option-e:#7c3aed;
+  --titulo-size:14px;--etiqueta-size:12px;--input-size:14px;--nombre-size:13px;
+  --header-size:11px;--btn-size:14px;--sec-title-size:13px;--credit-size:7.5px;--toast-size:12px;
+  --bg:#0b1120;--panel:#1e293b;--input:#334155;--btn:#3b82f6;
+  --txt:#e2e8f0;--muted:#94a3b8;
+  /* ✅ COLORES CORREGIDOS: A🟢 B🔵 C🟡 D🟠 E🔴 */
+  --option-a:#22c55e;--option-b:#3b82f6;--option-c:#facc15;--option-d:#f97316;--option-e:#ef4444;
   --sp-xs:3px;--sp-sm:5px;--sp-md:8px;--sp-lg:13px;--sp-xl:21px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html,body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
 
 .top-bar{display:flex;justify-content:center;align-items:center;padding:var(--sp-md) var(--sp-lg);background:var(--panel);border-bottom:1px solid rgba(71,85,105,0.5);flex-shrink:0}
-.top-bar h1{font-size:var(--titulo-size);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;text-align:center}
-
+.top-bar h1{font-size:var(--titulo-size);font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
 .intro{padding:var(--sp-md) var(--sp-lg);background:rgba(30,41,59,0.6);font-size:13px;color:var(--muted);line-height:1.5;border-bottom:1px solid rgba(71,85,105,0.3);flex-shrink:0}
 
 .header{padding:var(--sp-sm) var(--sp-lg);background:var(--panel);border-bottom:1px solid rgba(71,85,105,0.5);display:flex;gap:4px;flex-shrink:0;align-items:center}
-select{width:100%;height:40px;padding:0 10px;background:var(--input);color:var(--txt);border:1px solid rgba(71,85,105,0.6);border-radius:var(--sp-md);font-size:var(--input-size);appearance:none}
-#curso{flex:1;min-width:100px;font-weight:600}
-
-.btn-refresh{background:#475569;border:none;border-radius:8px;color:#fff;font-size:16px;height:40px;width:40px;margin-left:4px;cursor:pointer;opacity:0.9;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center}
-.btn-refresh:hover{opacity:1}.btn-refresh:disabled{opacity:0.4;cursor:not-allowed}
+select{width:100%;height:38px;padding:0 10px;background:var(--input);color:var(--txt);border:1px solid rgba(71,85,105,0.6);border-radius:var(--sp-md);font-size:var(--input-size);appearance:none}
+select::-ms-expand{display:none}
+option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
+#curso{flex:0 0 15%;min-width:80px;font-size:12px;font-weight:600}
+#evaluador{flex:1;font-weight:600}
+#evaluador:disabled{opacity:0.5}
+.btn-refresh{background:#475569;border:none;border-radius:6px;color:#fff;font-size:14px;height:30px;width:30px;margin-left:2px;cursor:pointer;opacity:0.9}
+.btn-refresh:hover{opacity:1}.btn-refresh:disabled{opacity:0.4}
 
 .main{flex:1;overflow-y:auto;padding:var(--sp-md) var(--sp-lg);display:flex;flex-direction:column;gap:var(--sp-md)}
-
-.instructions{background:var(--panel);border-radius:var(--sp-lg);padding:var(--sp-md);border:1px solid rgba(71,85,105,0.4);font-size:13px;line-height:1.6}
-.instructions strong{color:var(--txt);font-weight:700}
-.scale-legend{display:flex;flex-wrap:wrap;gap:var(--sp-sm);margin-top:var(--sp-sm);padding-top:var(--sp-sm);border-top:1px solid rgba(71,85,105,0.4)}
-.legend-item{display:flex;align-items:center;gap:4px;font-size:11px}
-.legend-dot{width:12px;height:12px;border-radius:50%}
+.section{background:var(--panel);border-radius:var(--sp-lg);padding:var(--sp-md);border:1px solid rgba(71,85,105,0.4);margin-bottom:var(--sp-md)}
+.sec-title{font-size:var(--sec-title-size);font-weight:700;margin-bottom:var(--sp-sm);color:var(--txt)}
+.instructions{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:var(--sp-md)}
+.scale-legend{display:flex;flex-wrap:wrap;gap:var(--sp-sm);margin-top:var(--sp-sm)}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10px}
+.legend-dot{width:10px;height:10px;border-radius:50%}
 .legend-dot.a{background:var(--option-a)}.legend-dot.b{background:var(--option-b)}
-.legend-dot.c{background:var(--option-c)}.legend-dot.d{background:var(--option-d)}
-.legend-dot.e{background:var(--option-e)}
+.legend-dot.c{background:var(--option-c)}.legend-dot.d{background:var(--option-d)}.legend-dot.e{background:var(--option-e)}
 
-.stud-list{background:var(--panel);border-radius:var(--sp-lg);padding:var(--sp-md);border:1px solid rgba(71,85,105,0.4)}
-.stud-header{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:var(--sp-xs);font-size:var(--header-size);color:var(--txt);text-align:center;padding:var(--sp-sm) 2px;border-bottom:1px solid rgba(71,85,105,0.5);margin-bottom:var(--sp-sm);font-weight:700}
-.stud-row{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:var(--sp-xs);align-items:center;background:rgba(255,255,255,0.035);padding:var(--sp-sm);border-radius:var(--sp-md);margin-bottom:var(--sp-sm);border:1px solid rgba(71,85,105,0.3)}
+/* ✅ GRID CON COLUMNA N° LISTA + FILAS DISTINGUIBLES */
+.stud-header{display:grid;grid-template-columns:0.6fr 2fr repeat(5,1fr);gap:var(--sp-xs);font-size:var(--header-size);color:var(--txt);text-align:center;padding:var(--sp-sm) 2px;border-bottom:1px solid rgba(71,85,105,0.5);margin-bottom:var(--sp-sm);font-weight:700}
+.stud-row{display:grid;grid-template-columns:0.6fr 2fr repeat(5,1fr);gap:var(--sp-xs);align-items:center;background:#151f2e;padding:var(--sp-sm);border-radius:var(--sp-md);margin-bottom:6px;border:1px solid rgba(255,255,255,0.06)}
+.stud-row:nth-child(even){background:#182536}
+.stud-row.self{background:rgba(59,130,246,0.12);border:1px dashed rgba(59,130,246,0.4)}
+.s-lista{text-align:center;font-size:13px;font-weight:700;color:#60a5fa}
 .s-name{font-size:var(--nombre-size);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:2px}
+
+/* ✅ RADIO BUTTONS CON FEEDBACK DE COLOR */
 .radio-group{display:flex;flex-direction:column;gap:2px;align-items:center}
-.radio-group label{font-size:9px;color:var(--muted);font-weight:600}
-.radio-group input{width:18px;height:18px;accent-color:var(--btn);cursor:pointer}
+.radio-group input[type="radio"]{appearance:none;width:22px;height:22px;border:2px solid rgba(255,255,255,0.25);border-radius:50%;cursor:pointer;position:relative;background:rgba(0,0,0,0.2);transition:all 0.15s}
+.radio-group input[type="radio"]::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:10px;height:10px;border-radius:50%;transition:transform 0.15s}
+.radio-group input[type="radio"]:checked::after{transform:translate(-50%,-50%) scale(1)}
+.radio-group input[type="radio"]:checked{border-color:transparent}
+.radio-group input[value="A"]:checked{background:var(--option-a);box-shadow:0 0 6px var(--option-a)}
+.radio-group input[value="B"]:checked{background:var(--option-b);box-shadow:0 0 6px var(--option-b)}
+.radio-group input[value="C"]:checked{background:var(--option-c);box-shadow:0 0 6px var(--option-c)}
+.radio-group input[value="D"]:checked{background:var(--option-d);box-shadow:0 0 6px var(--option-d)}
+.radio-group input[value="E"]:checked{background:var(--option-e);box-shadow:0 0 6px var(--option-e)}
+.radio-group label{font-size:10px;color:var(--muted);font-weight:600}
+.radio-group input:checked+label{color:var(--txt)}
 
-.empty{display:none;text-align:center;color:var(--muted);font-size:12px;padding:var(--sp-lg) 0}
-.empty.show{display:block}
-.loading{display:none;text-align:center;padding:var(--sp-lg);color:var(--muted)}
-.loading.show{display:block}
-
-.footer{padding:var(--sp-sm) var(--sp-lg) var(--sp-md);background:var(--panel);border-top:1px solid rgba(71,85,105,0.5);display:flex;align-items:center;flex-shrink:0;gap:var(--sp-sm)}
-.btn-send{width:100%;height:48px;font-size:var(--btn-size);font-weight:700;background:var(--btn);color:#fff;border:none;border-radius:var(--sp-lg);text-transform:uppercase;letter-spacing:0.5px;cursor:pointer}
-.btn-send:disabled{background:#475569;color:#64748b;cursor:not-allowed}
-
-#toast{position:fixed;bottom:60px;left:12px;right:12px;background:rgba(15,23,42,0.95);color:var(--txt);text-align:center;padding:var(--sp-sm);border-radius:var(--sp-md);font-size:var(--toast-size);transform:translateY(20px);opacity:0;transition:0.2s cubic-bezier(0.4,0,0.2,1);pointer-events:none;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.3);max-width:calc(100% - 24px)}
+.empty{text-align:center;color:var(--muted);font-size:10px;padding:var(--sp-md) 0}
+.footer-note{text-align:center;font-size:11px;color:rgba(255,255,255,0.25);padding:6px 0 10px;background:var(--bg);flex-shrink:0}
+.footer{padding:var(--sp-sm) var(--sp-lg) var(--sp-md);background:var(--panel);border-top:1px solid rgba(71,85,105,0.5);display:flex;align-items:center;flex-shrink:0}
+.btn-send{width:100%;height:44px;font-size:var(--btn-size);font-weight:700;background:var(--btn);color:#fff;border:none;border-radius:var(--sp-lg);text-transform:uppercase}
+.btn-send:disabled{background:#475569;color:#64748b}
+#toast{position:fixed;bottom:54px;left:12px;right:12px;background:rgba(15,23,42,0.95);color:var(--txt);text-align:center;padding:var(--sp-sm);border-radius:var(--sp-md);font-size:var(--toast-size);transform:translateY(20px);opacity:0;transition:0.2s;pointer-events:none;z-index:100}
 #toast.show{transform:translateY(0);opacity:1}
-#toast.ok{background:rgba(16,185,129,0.9)}
-#toast.warn{background:rgba(245,158,11,0.9)}
-#toast.error{background:rgba(239,68,68,0.9)}
-
-@media(max-width:480px){.stud-header,.stud-row{grid-template-columns:1.5fr repeat(5,1fr);font-size:10px}.s-name{font-size:12px}.radio-group input{width:16px;height:16px}.legend-item{font-size:10px}}
-@media(max-width:375px){.stud-header,.stud-row{grid-template-columns:1.3fr repeat(5,1fr);gap:2px}.radio-group label{font-size:8px}}
+#toast.ok{background:rgba(16,185,129,0.9)}#toast.warn{background:rgba(245,158,11,0.9)}#toast.error{background:rgba(239,68,68,0.9)}
+@media(max-width:375px){.stud-header,.stud-row{grid-template-columns:0.4fr 1.5fr repeat(5,1fr);font-size:10px}.radio-group input[type="radio"]{width:18px;height:18px}}
 </style>
 </head>
 <body>
-
 <div class="top-bar"><h1>ESCALA DE INTEGRACIÓN SOCIAL</h1></div>
-
-<div class="intro">
-  Éste instrumento permite tener un panorama general de la cercanía o lejanía de las interacciones sociales en un grupo curso. Muchas gracias por tu participación.
-</div>
+<div class="intro">Éste instrumento permite tener un panorama general de la cercanía o lejanía de las interacciones sociales en un grupo curso. Muchas gracias por tu participación.</div>
 
 <div class="header">
-  <select id="curso"><option value="">📚 Selecciona tu curso</option></select>
-  <button class="btn-refresh" id="btnRefresh" title="Actualizar lista">🔄</button>
+  <select id="curso"><option value="">📚Curso</option></select>
+  <select id="evaluador" disabled><option value="">👤Tu nombre</option></select>
+  <button class="btn-refresh" id="btnRefresh" title="Actualizar">🔄</button>
 </div>
 
 <div class="main">
-  <div class="instructions">
-    <strong>De las siguientes alternativas, elige cual de ellas se acerca en mayor grado a la relación que tienes con cada uno de los/as siguientes compañeros/as:</strong>
+  <div class="section">
+    <div class="sec-title">Instrucciones</div>
+    <div class="instructions">
+      De las siguientes alternativas, elige cual de ellas se acerca en mayor grado a la relación que tienes con cada uno de los/as siguientes compañeros/as. Donde:<br><br>
+      <strong>A.</strong> Es uno(a) de mis mejores amigos(as)<br>
+      <strong>B.</strong> Es amigo(a) pero no tan cercano(a)<br>
+      <strong>C.</strong> No me cae bien ni mal- no lo conozco(a)<br>
+      <strong>D.</strong> Me cae un poco mal<br>
+      <strong>E.</strong> Me cae muy mal
+    </div>
     <div class="scale-legend">
-      <div class="legend-item"><span class="legend-dot a"></span><span>A: Mejor amigo/a</span></div>
-      <div class="legend-item"><span class="legend-dot b"></span><span>B: Amigo/a</span></div>
-      <div class="legend-item"><span class="legend-dot c"></span><span>C: Neutral</span></div>
-      <div class="legend-item"><span class="legend-dot d"></span><span>D: Me cae mal</span></div>
-      <div class="legend-item"><span class="legend-dot e"></span><span>E: Muy mal</span></div>
+      <div class="legend-item"><span class="legend-dot a"></span><span>A</span></div>
+      <div class="legend-item"><span class="legend-dot b"></span><span>B</span></div>
+      <div class="legend-item"><span class="legend-dot c"></span><span>C</span></div>
+      <div class="legend-item"><span class="legend-dot d"></span><span>D</span></div>
+      <div class="legend-item"><span class="legend-dot e"></span><span>E</span></div>
     </div>
   </div>
-
-  <div class="stud-list">
+  <div class="section">
     <div class="stud-header">
-      <span style="text-align:left;padding-left:4px">Compañero/a</span>
-      <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span>
+      <span>N°</span><span style="text-align:left">Nombre</span><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span>
     </div>
     <div id="studList"></div>
-    <div id="emptyMsg" class="empty">📋 Selecciona un curso para comenzar</div>
-    <div id="loadingMsg" class="loading">⏳ Cargando lista de estudiantes...</div>
+    <div id="emptyMsg" class="empty">Selecciona curso y tu nombre para comenzar</div>
   </div>
 </div>
-
-<div class="footer">
-  <button class="btn-send" id="btnSend" disabled>✅ ENVIAR RESPUESTAS</button>
-</div>
-
+<div class="footer-note">Desarrollado por Carlos Felipe Sepúlveda — 2026</div>
+<div class="footer"><button class="btn-send" id="btnSend" disabled>📤 ENVIAR</button></div>
 <div id="toast"></div>
 
 <script>
-// ✅ CONFIGURACIÓN - REEMPLAZAR CON TU URL DE APPS SCRIPT
+// ✅ CONFIGURACIÓN - TU URL
 const WEBHOOK = "https://script.google.com/macros/s/AKfycbwuyb1FnAw__SIz-JdAaZaBMaibY9jeAZuLwrBqRejnCypBur_zykBm6pLukjWTvG5u0g/exec";
-const KEY_PENDING = "sociograma_pendientes";
+const KEY = "sociograma_pendientes";
+const CURSOS = ["3°A","3°B","3°C","4°A","4°B","4°C","5°A","5°B","5°C","6°A","6°B","6°C","6°D","7°A","7°B","7°C","7°D","8°A","8°B","8°C","I°A","I°B","I°C","II°A","II°B","II°C","III°A","III°B","III°C","IV°A","IV°B","IV°C"];
 
-const CURSOS = [
-  "3°A","3°B","3°C","4°A","4°B","4°C","5°A","5°B","5°C","6°A","6°B","6°C","6°D",
-  "7°A","7°B","7°C","7°D","8°A","8°B","8°C","I°A","I°B","I°C","II°A","II°B","II°C",
-  "III°A","III°B","III°C","IV°A","IV°B","IV°C"
-];
+let cache = {}, evaluaciones = {}, evaluadorActual = null, rolSaved = localStorage.getItem("doc_rol") || "";
+let FORZAR = false, cursoActual = null;
 
-let estudiantesCache = {};
-let evaluaciones = {};
-let cursoActual = null;
-let forceRefresh = false;
+const cursoSel = document.getElementById("curso");
+const evaluadorSel = document.getElementById("evaluador");
+const btnSend = document.getElementById("btnSend");
+const toastEl = document.getElementById("toast");
+const studList = document.getElementById("studList");
+const emptyMsg = document.getElementById("emptyMsg");
+const btnRefresh = document.getElementById("btnRefresh");
 
-const cursoSel = document.getElementById('curso');
-const btnRefresh = document.getElementById('btnRefresh');
-const studList = document.getElementById('studList');
-const emptyMsg = document.getElementById('emptyMsg');
-const loadingMsg = document.getElementById('loadingMsg');
-const btnSend = document.getElementById('btnSend');
-const toastEl = document.getElementById('toast');
+// ✅ TUS FUNCIONES ORIGINALES
+function limpiarNombre(n){ if(!n) return ""; return decodeURIComponent(n.replace(/\+/g," ")).trim() }
+function toast(msg,cls){ toastEl.textContent=msg; toastEl.className=cls?cls+" show":"show"; setTimeout(()=>toastEl.className="",2000) }
 
-function init(){
-  CURSOS.forEach(curso => {
-    const opt = document.createElement('option');
-    opt.value = curso; opt.textContent = curso;
-    cursoSel.appendChild(opt);
-  });
-  cursoSel.addEventListener('change', onCursoChange);
-  btnRefresh.addEventListener('click', onRefresh);
-  btnSend.addEventListener('click', onSend);
-  checkSendButton();
+// ✅ TU initCursos ORIGINAL
+function initCursos(){
+  if(!cursoSel) return;
+  while(cursoSel.options.length>1) cursoSel.remove(1);
+  CURSOS.forEach(c=>{ const o=document.createElement("option"); o.value=c; o.textContent=c; cursoSel.appendChild(o) });
+  check();
 }
+initCursos();
 
-function toast(msg, type=''){
-  toastEl.textContent = msg;
-  toastEl.className = type + ' show';
-  setTimeout(() => toastEl.className = '', 2500);
-}
-
-async function onCursoChange(){
-  const curso = cursoSel.value;
-  if(!curso) { resetForm(); return; }
-  
-  cursoActual = curso;
-  loadingMsg.classList.add('show');
-  emptyMsg.classList.remove('show');
-  studList.innerHTML = '';
-  btnSend.disabled = true;
-  
-  try {
-    if(navigator.onLine && !forceRefresh){
-      const url = `${WEBHOOK}?action=getEstudiantes&curso=${encodeURIComponent(curso)}&t=${Date.now()}`;
-      const res = await fetch(url, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
-      const data = await res.json();
-      
-      if(data.success && data.estudiantes?.length){
-        estudiantesCache[curso] = data.estudiantes;
-        localStorage.setItem(`est_${curso}`, JSON.stringify(data.estudiantes));
-        renderEstudiantes(data.estudiantes);
-        toast('✅ Lista actualizada', 'ok');
-        forceRefresh = false;
-        return;
+// ✅ TU change de curso + populateEvaluador
+cursoSel.addEventListener("change", async ()=>{
+  if(!cursoSel.value) return;
+  cursoActual = cursoSel.value;
+  evaluadorActual = null;
+  evaluadorSel.disabled = true; evaluadorSel.innerHTML = '<option value="">👤Tu nombre</option>';
+  emptyMsg.classList.add("show"); studList.innerHTML = ""; btnSend.disabled = true;
+  try{
+    if(navigator.onLine){
+      const url = WEBHOOK + "?action=getEstudiantes&curso=" + encodeURIComponent(cursoSel.value) + "&t=" + Date.now();
+      const r = await fetch(url, { cache: "no-store" });
+      const d = await r.json();
+      if(d.success && d.estudiantes?.length){
+        const lista = d.estudiantes.map(e=>({ id:e.id, nombre:limpiarNombre(e.nombre) }));
+        cache[cursoSel.value] = lista;
+        localStorage.setItem("lista_"+cursoSel.value, JSON.stringify(lista));
+        populateEvaluador(lista);
+        toast(FORZAR ? "🔄 Actualizado" : "✅ Lista lista", "ok");
+        FORZAR = false; return;
       }
     }
-    throw new Error('Fallback');
-  } catch(err){
-    const cached = localStorage.getItem(`est_${curso}`);
-    if(cached){
-      estudiantesCache[curso] = JSON.parse(cached);
-      renderEstudiantes(estudiantesCache[curso]);
-      toast('📴 Usando datos guardados', 'warn');
-      return;
+    throw 1;
+  }catch{
+    const guardado = localStorage.getItem("lista_"+cursoSel.value);
+    if(guardado){
+      const lista = JSON.parse(guardado);
+      cache[cursoSel.value] = lista;
+      populateEvaluador(lista);
+      toast("📴 Usando respaldo", "warn"); return;
     }
-    toast('⚠️ Sin datos de estudiantes', 'error');
-    emptyMsg.textContent = '📭 No hay estudiantes registrados para este curso';
-    emptyMsg.classList.add('show');
-  } finally {
-    loadingMsg.classList.remove('show');
+    cache[cursoSel.value] = [];
+    toast("⚠️ Sin datos de estudiantes", "warn");
   }
+});
+
+// ✅ NUEVO: Llenar dropdown evaluador
+function populateEvaluador(estudiantes){
+  evaluadorSel.innerHTML = '<option value="">👤Tu nombre</option>';
+  estudiantes.forEach(est => {
+    const opt = document.createElement("option");
+    opt.value = JSON.stringify({id: est.id, nombre: est.nombre});
+    opt.textContent = `${est.id}. ${est.nombre}`; // ✅ Mostrar "N°Lista. Nombre"
+    evaluadorSel.appendChild(opt);
+  });
+  evaluadorSel.disabled = false;
 }
 
-function onRefresh(){
-  if(!cursoSel.value){ toast('Selecciona un curso primero', 'warn'); return; }
-  forceRefresh = true;
-  toast('🔄 Actualizando...', 'warn');
-  onCursoChange();
-}
+// ✅ NUEVO: Cuando se selecciona evaluador
+evaluadorSel.addEventListener("change", ()=>{
+  const val = evaluadorSel.value;
+  if(!val) { evaluadorActual = null; renderList(); check(); return; }
+  evaluadorActual = JSON.parse(val);
+  renderList(); check();
+});
 
-function renderEstudiantes(estudiantes){
-  if(!estudiantes || estudiantes.length === 0){
-    emptyMsg.textContent = '📭 No hay estudiantes en este curso';
-    emptyMsg.classList.add('show');
-    studList.innerHTML = '';
-    return;
-  }
-  emptyMsg.classList.remove('show');
-  
+// ✅ TU BOTÓN 🔄 ORIGINAL
+btnRefresh.addEventListener("click", ()=>{
+  if(!cursoSel.value){ toast("Selecciona un curso primero","warn"); return }
+  FORZAR = true;
+  cursoSel.dispatchEvent(new Event("change"));
+});
+
+// ✅ TU renderList + columna N° + radio buttons A-E con colores
+function renderList(){
+  const estudiantes = cache[cursoActual] || [];
+  if(!estudiantes.length){ emptyMsg.classList.add("show"); studList.innerHTML=""; return; }
+  emptyMsg.classList.remove("show");
   studList.innerHTML = estudiantes.map(est => {
-    const id = est.id, nombre = est.nombre;
-    const saved = evaluaciones[id]?.calificacion || '';
+    const isSelf = evaluadorActual && est.id === evaluadorActual.id;
+    const saved = evaluaciones[est.id]?.calificacion || '';
     return `
-    <div class="stud-row" data-id="${id}">
-      <span class="s-name" title="${nombre}">${nombre}</span>
+    <div class="stud-row ${isSelf?'self':''}">
+      <span class="s-lista">${est.id}</span>
+      <span class="s-name">${est.nombre} ${isSelf?'(Tú)':''}</span>
       ${['A','B','C','D','E'].map(opt => `
         <div class="radio-group">
-          <input type="radio" name="est_${id}" id="${id}_${opt}" value="${opt}" 
-                 ${saved === opt ? 'checked' : ''} 
-                 onchange="onSelect('${id}', '${nombre}', '${opt}')">
-          <label for="${id}_${opt}">${opt}</label>
+          <input type="radio" name="est_${est.id}" id="${est.id}_${opt}" value="${opt}" 
+                 ${saved===opt?'checked':''} onchange="onSelect('${est.id}','${est.nombre.replace(/'/g,"\\'")}','${opt}')">
+          <label for="${est.id}_${opt}">${opt}</label>
         </div>
       `).join('')}
     </div>`;
-  }).join('');
-  checkSendButton();
+  }).join("");
 }
 
-function onSelect(estId, estNombre, calificacion){
-  evaluaciones[estId] = { id: estId, nombre: estNombre, calificacion };
-  checkSendButton();
-}
+function onSelect(id, nombre, calificacion){ evaluaciones[id] = { id, nombre, calificacion }; check(); }
 
-function checkSendButton(){
-  const estudiantes = estudiantesCache[cursoActual] || [];
-  if(estudiantes.length === 0){ btnSend.disabled = true; return; }
+// ✅ TU check + validar todos (incluido uno mismo)
+function check(){
+  if(!cursoSel.value || !evaluadorSel.value){ btnSend.disabled = true; return; }
+  const estudiantes = cache[cursoActual] || [];
+  if(!estudiantes.length){ btnSend.disabled = true; return; }
   const allSelected = estudiantes.every(est => evaluaciones[est.id]?.calificacion);
   btnSend.disabled = !allSelected;
-  if(allSelected) toast('✅ Listo para enviar', 'ok');
 }
 
-async function onSend(){
+// ✅ TU btnSend + incluir evaluador en payload
+btnSend.addEventListener("click", ()=>{
   if(btnSend.disabled) return;
-  const estudiantes = estudiantesCache[cursoActual] || [];
+  const estudiantes = cache[cursoActual] || [];
   const data = {
     timestamp: new Date().toISOString(),
     curso: cursoActual,
+    rol: rolSaved,
+    evaluador: evaluadorActual,
     evaluaciones: estudiantes.map(est => evaluaciones[est.id]).filter(e => e)
   };
-  
-  let pending = JSON.parse(localStorage.getItem(KEY_PENDING) || '[]');
-  pending.push(data);
-  localStorage.setItem(KEY_PENDING, JSON.stringify(pending));
-  
-  toast('✅ Registrado. Sincronizando...', 'ok');
-  if(navigator.onLine) await syncPending();
-  
-  // ✅ RESET AUTOMÁTICO - CLAVE PARA TABLETS COMPARTIDAS
-  setTimeout(() => {
-    resetForm();
-    toast('🔄 Listo para siguiente persona', 'ok');
-  }, 800);
-}
-
-function resetForm(){
-  evaluaciones = {};
-  studList.innerHTML = '';
-  emptyMsg.textContent = '📋 Selecciona un curso para comenzar';
-  emptyMsg.classList.add('show');
-  cursoSel.value = '';
-  cursoActual = null;
-  btnSend.disabled = true;
-  // ✅ No guardamos respuestas en localStorage para evitar filtraciones
-}
-
-async function syncPending(){
-  let pending = JSON.parse(localStorage.getItem(KEY_PENDING) || '[]');
-  if(pending.length === 0) return;
-  const sent = [];
-  for(let i = 0; i < pending.length; i++){
-    try{
-      const res = await fetch(WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ data: JSON.stringify(pending[i]) }),
-        cache: 'no-store'
-      });
-      if(res.ok && (await res.text()).trim() === 'OK') sent.push(i);
-    } catch(err){ console.warn('Sync error:', err); }
-  }
-  if(sent.length > 0){
-    pending = pending.filter((_, idx) => !sent.includes(idx));
-    localStorage.setItem(KEY_PENDING, JSON.stringify(pending));
-    if(pending.length === 0) toast('📤 Todos los datos sincronizados', 'ok');
-  }
-}
-
-window.addEventListener('online', () => { toast('🌐 Conexión restaurada', 'ok'); syncPending(); });
-
-// ✅ PREVENIR CACHE DE NAVEGACIÓN (back-forward cache)
-window.addEventListener('pageshow', (e) => {
-  if(e.persisted) window.location.reload();
+  let cola = JSON.parse(localStorage.getItem(KEY)||"[]");
+  cola.push(data); localStorage.setItem(KEY, JSON.stringify(cola));
+  toast("✅ Registrado. Se sincroniza en segundo plano", "ok");
+  setTimeout(reset,700);
+  if(navigator.onLine) sincronizarEnSegundoPlano();
 });
 
-document.addEventListener('DOMContentLoaded', init);
-if(document.readyState !== 'loading') init();
+// ✅ TU reset + limpiar evaluador
+function reset(){
+  evaluadorActual = null;
+  evaluaciones = {};
+  cursoSel.value = "";
+  evaluadorSel.disabled = true; evaluadorSel.innerHTML = '<option value="">👤Tu nombre</option>';
+  studList.innerHTML = "";
+  emptyMsg.textContent = "Selecciona curso y tu nombre para comenzar";
+  emptyMsg.classList.add("show");
+  btnSend.disabled = true;
+  initCursos();
+}
+
+// ✅ TU sincronizarEnSegundoPlano ORIGINAL (ESTE ES EL QUE FUNCIONA)
+async function sincronizarEnSegundoPlano(){
+  let cola = JSON.parse(localStorage.getItem(KEY)||"[]");
+  if(!cola.length) return;
+  const ok=[];
+  for(let i=0;i<cola.length;i++){
+    try{
+      // ✅ TU MÉTODO ORIGINAL DE ENVÍO (CON ESPACIO DESPUÉS DE 'data:')
+      const res = await fetch(WEBHOOK, {
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body:new URLSearchParams({ data:JSON.stringify(cola[i]) })
+      });
+      if(res.ok) ok.push(i);
+    }catch{}
+  }
+  if(ok.length){ cola = cola.filter((_,idx)=>!ok.includes(idx)); localStorage.setItem(KEY, JSON.stringify(cola)); }
+}
+window.addEventListener("online", ()=>{ toast("🌐 Conexión restaurada. Sincronizando...","ok"); sincronizarEnSegundoPlano() });
+if(navigator.onLine) sincronizarEnSegundoPlano();
 </script>
 </body>
 </html>
