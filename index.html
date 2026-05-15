@@ -48,7 +48,20 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
 .stud-row:nth-child(even){background:#182536}
 .stud-row.self{background:rgba(59,130,246,0.12);border:1px dashed rgba(59,130,246,0.4)}
 .s-lista{text-align:center;font-size:13px;font-weight:700;color:#60a5fa}
-.s-name{font-size:var(--nombre-size);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:2px}
+.s-name{
+  font-size:var(--nombre-size);
+  font-weight:500;
+  white-space: normal;           /* ✅ Permite salto de línea */
+  overflow: hidden;              /* ✅ Evita desbordamiento vertical */
+  text-overflow: clip;           /* ✅ Corta sin "..." si excede */
+  padding-left:2px;
+  line-height: 1.2;              /* ✅ Controla altura entre líneas */
+  max-height: calc(var(--nombre-size) * 2.4); /* ✅ Máximo 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;         /* ✅ Limita a 2 líneas en Chrome/Safari */
+  -webkit-box-orient: vertical;
+  word-break: break-word;        /* ✅ Rompe palabras largas si es necesario */
+}
 
 /* ✅ RADIO BUTTONS CON FEEDBACK DE COLOR */
 .radio-group{display:flex;flex-direction:column;gap:2px;align-items:center}
