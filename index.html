@@ -74,9 +74,18 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
 #toast.show{transform:translateY(0);opacity:1}
 #toast.ok{background:rgba(16,185,129,0.9)}#toast.warn{background:rgba(245,158,11,0.9)}#toast.error{background:rgba(239,68,68,0.9)}
 
-/* ✅ PANEL DE PROGRESO */
+/* ✅ LISTA DE PROGRESO (NUEVO DISEÑO VERTICAL) */
 #progresoPanel{display:none;padding:var(--sp-md) var(--sp-lg);background:var(--panel);border-top:1px solid rgba(71,85,105,0.5)}
-#progresoLista{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-height:200px;overflow-y:auto}
+#progresoLista{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;padding-right:4px}
+.prog-item{display:flex;align-items:center;justify-content:space-between;background:rgba(51,65,85,0.3);padding:8px 10px;border-radius:6px;font-size:12px;transition:background 0.2s}
+.prog-item.respondido{background:rgba(34,197,94,0.12);border-left:3px solid #22c55e}
+.prog-item .info{flex:1;display:flex;align-items:center;gap:8px}
+.prog-item .check{width:18px;height:18px;accent-color:#22c55e;cursor:default}
+.prog-item .nombre{font-weight:600;color:var(--txt)}
+.prog-item.respondido .nombre{color:#22c55e}
+.prog-item .estado{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,0.05)}
+.prog-item.respondido .estado{background:rgba(34,197,94,0.2);color:#4ade80}
+
 @media(max-width:375px){.stud-header,.stud-row{grid-template-columns:0.4fr 1.5fr repeat(5,1fr);font-size:10px}.radio-group input[type="radio"]{width:18px;height:18px}}
 </style>
 </head>
@@ -86,7 +95,7 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
 
 <div class="header">
   <select id="curso"><option value="">📚Curso</option></select>
-  <select id="evaluador" disabled><option value="">Tu nombre</option></select>
+  <select id="evaluador" disabled><option value="">👤Tu nombre</option></select>
   <button class="btn-refresh" id="btnRefresh" title="Actualizar">🔄</button>
 </div>
 
@@ -118,17 +127,17 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
   </div>
 </div>
 
-<!-- ✅ PANEL DE PROGRESO -->
+<!-- ✅ PANEL DE PROGRESO (LISTA VERTICAL) -->
 <div id="progresoPanel">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-md)">
-    <strong style="font-size:13px">📊 Progreso: <span id="progresoTexto">0/0</span></strong>
+    <strong style="font-size:13px"> Progreso: <span id="progresoTexto">0/0</span></strong>
     <button id="btnRefreshProgreso" style="background:#475569;border:none;border-radius:6px;color:#fff;font-size:12px;padding:6px 12px;cursor:pointer">🔄 Actualizar</button>
   </div>
   <div id="progresoLista"></div>
 </div>
 
 <div class="footer-note">Desarrollado por Carlos Felipe Sepúlveda — 2026</div>
-<div class="footer"><button class="btn-send" id="btnSend" disabled>📤 ENVIAR</button></div>
+<div class="footer"><button class="btn-send" id="btnSend" disabled> ENVIAR</button></div>
 <div id="toast"></div>
 
 <script>
@@ -201,7 +210,6 @@ function populateEvaluador(estudiantes){
     opt.textContent = `${est.id}. ${est.nombre}`;
     evaluadorSel.appendChild(opt);
   });
-  // ✅ Opción "📊 Ver progreso" al final
   const progOpt = document.createElement("option");
   progOpt.value = "__PROGRESO__";
   progOpt.textContent = "📊 Ver progreso del curso";
@@ -310,12 +318,12 @@ async function sincronizarEnSegundoPlano(){
   if(ok.length){ cola = cola.filter((_,idx)=>!ok.includes(idx)); localStorage.setItem(KEY, JSON.stringify(cola)); }
 }
 
-// ✅ FUNCIONES DE PROGRESO (MUESTRA NOMBRE EXACTO GUARDADO EN RESPUESTAS)
+// ✅ PROGRESO EN LISTA VERTICAL
 async function cargarProgreso() {
   if (!cursoActual) return;
   const panel = document.getElementById('progresoLista');
   const texto = document.getElementById('progresoTexto');
-  panel.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted)">Cargando...</div>';
+  panel.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px">Cargando...</div>';
   
   try {
     const url = WEBHOOK + "?action=getProgreso&curso=" + encodeURIComponent(cursoActual) + "&t=" + Date.now();
@@ -326,12 +334,12 @@ async function cargarProgreso() {
     
     const estudiantes = cache[cursoActual] || [];
     if (!estudiantes.length) {
-      panel.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted)">Sin estudiantes</div>';
+      panel.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px">Sin estudiantes</div>';
       texto.textContent = '0/0';
       return;
     }
     
-    const respondidosMap = d.respondidos || {};  // {12: "Maria Perez", 15: "Juan Gomez"}
+    const respondidosMap = d.respondidos || {};
     const respondidosIds = Object.keys(respondidosMap).map(Number);
     const total = estudiantes.length;
     const completados = estudiantes.filter(e => respondidosIds.includes(Number(e.id))).length;
@@ -340,20 +348,21 @@ async function cargarProgreso() {
     
     panel.innerHTML = estudiantes.map(est => {
       const idNum = Number(est.id);
-      const nombreGuardado = respondidosMap[idNum]; // ✅ Nombre real usado en el formulario
+      const nombreGuardado = respondidosMap[idNum];
       const checked = respondidosIds.includes(idNum);
       
       return `
-      <div style="display:flex;align-items:center;gap:4px;background:${checked?'rgba(34,197,94,0.15)':'rgba(51,65,85,0.3)'};padding:4px 6px;border-radius:4px;font-size:11px">
-        <input type="checkbox" ${checked?'checked':''} disabled style="accent-color:#22c55e">
-        <span style="${checked?'color:#22c55e;font-weight:600':''}">
-          ${est.id}. ${nombreGuardado || est.nombre}  ${!nombreGuardado && checked ? '️' : ''}
-        </span>
+      <div class="prog-item ${checked?'respondido':''}">
+        <div class="info">
+          <input type="checkbox" class="check" ${checked?'checked':''} disabled>
+          <span class="nombre">${est.id}. ${nombreGuardado || est.nombre}</span>
+        </div>
+        <span class="estado">${checked ? '✅ Respondido' : 'Pendiente'}</span>
       </div>`;
     }).join('');
     
   } catch (err) {
-    panel.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#f87171">Error: ${err.message}</div>`;
+    panel.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px">Error: ${err.message}</div>`;
   }
 }
 
@@ -361,7 +370,7 @@ document.getElementById('btnRefreshProgreso').addEventListener('click', () => {
   if (cursoActual) cargarProgreso();
 });
 
-window.addEventListener("online", ()=>{ toast("🌐 Conexión restaurada. Sincronizando...","ok"); sincronizarEnSegundoPlano() });
+window.addEventListener("online", ()=>{ toast(" Conexión restaurada. Sincronizando...","ok"); sincronizarEnSegundoPlano() });
 if(navigator.onLine) sincronizarEnSegundoPlano();
 </script>
 </body>
