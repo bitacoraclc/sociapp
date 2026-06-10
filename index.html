@@ -11,7 +11,6 @@
   --header-size:11px;--btn-size:14px;--sec-title-size:13px;--credit-size:7.5px;--toast-size:12px;
   --bg:#0b1120;--panel:#1e293b;--input:#334155;--btn:#3b82f6;
   --txt:#e2e8f0;--muted:#94a3b8;
-  /* ✅ COLORES CORREGIDOS: A🟢 B🔵 C🟡 D🟠 E🔴 */
   --option-a:#22c55e;--option-b:#3b82f6;--option-c:#facc15;--option-d:#f97316;--option-e:#ef4444;
   --sp-xs:3px;--sp-sm:5px;--sp-md:8px;--sp-lg:13px;--sp-xl:21px;
 }
@@ -42,28 +41,17 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
 .legend-dot.a{background:var(--option-a)}.legend-dot.b{background:var(--option-b)}
 .legend-dot.c{background:var(--option-c)}.legend-dot.d{background:var(--option-d)}.legend-dot.e{background:var(--option-e)}
 
-/* ✅ GRID CON COLUMNA N° LISTA + FILAS DISTINGUIBLES */
 .stud-header{display:grid;grid-template-columns:0.6fr 2fr repeat(5,1fr);gap:var(--sp-xs);font-size:var(--header-size);color:var(--txt);text-align:center;padding:var(--sp-sm) 2px;border-bottom:1px solid rgba(71,85,105,0.5);margin-bottom:var(--sp-sm);font-weight:700}
 .stud-row{display:grid;grid-template-columns:0.6fr 2fr repeat(5,1fr);gap:var(--sp-xs);align-items:center;background:#151f2e;padding:var(--sp-sm);border-radius:var(--sp-md);margin-bottom:6px;border:1px solid rgba(255,255,255,0.06)}
 .stud-row:nth-child(even){background:#182536}
 .stud-row.self{background:rgba(59,130,246,0.12);border:1px dashed rgba(59,130,246,0.4)}
 .s-lista{text-align:center;font-size:13px;font-weight:700;color:#60a5fa}
 .s-name{
-  font-size:var(--nombre-size);
-  font-weight:500;
-  white-space: normal;           /* ✅ Permite salto de línea */
-  overflow: hidden;              /* ✅ Evita desbordamiento vertical */
-  text-overflow: clip;           /* ✅ Corta sin "..." si excede */
-  padding-left:2px;
-  line-height: 1.2;              /* ✅ Controla altura entre líneas */
-  max-height: calc(var(--nombre-size) * 2.4); /* ✅ Máximo 2 líneas */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;         /* ✅ Limita a 2 líneas en Chrome/Safari */
-  -webkit-box-orient: vertical;
-  word-break: break-word;        /* ✅ Rompe palabras largas si es necesario */
+  font-size:var(--nombre-size);font-weight:500;white-space:normal;overflow:hidden;text-overflow:clip;
+  padding-left:2px;line-height:1.2;max-height:calc(var(--nombre-size)*2.4);display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word;
 }
 
-/* ✅ RADIO BUTTONS CON FEEDBACK DE COLOR */
 .radio-group{display:flex;flex-direction:column;gap:2px;align-items:center}
 .radio-group input[type="radio"]{appearance:none;width:22px;height:22px;border:2px solid rgba(255,255,255,0.25);border-radius:50%;cursor:pointer;position:relative;background:rgba(0,0,0,0.2);transition:all 0.15s}
 .radio-group input[type="radio"]::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:10px;height:10px;border-radius:50%;transition:transform 0.15s}
@@ -85,6 +73,10 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
 #toast{position:fixed;bottom:54px;left:12px;right:12px;background:rgba(15,23,42,0.95);color:var(--txt);text-align:center;padding:var(--sp-sm);border-radius:var(--sp-md);font-size:var(--toast-size);transform:translateY(20px);opacity:0;transition:0.2s;pointer-events:none;z-index:100}
 #toast.show{transform:translateY(0);opacity:1}
 #toast.ok{background:rgba(16,185,129,0.9)}#toast.warn{background:rgba(245,158,11,0.9)}#toast.error{background:rgba(239,68,68,0.9)}
+
+/* ✅ PANEL DE PROGRESO */
+#progresoPanel{display:none;padding:var(--sp-md) var(--sp-lg);background:var(--panel);border-top:1px solid rgba(71,85,105,0.5)}
+#progresoLista{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-height:200px;overflow-y:auto}
 @media(max-width:375px){.stud-header,.stud-row{grid-template-columns:0.4fr 1.5fr repeat(5,1fr);font-size:10px}.radio-group input[type="radio"]{width:18px;height:18px}}
 </style>
 </head>
@@ -94,7 +86,7 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
 
 <div class="header">
   <select id="curso"><option value="">📚Curso</option></select>
-  <select id="evaluador" disabled><option value="">👤Tu nombre</option></select>
+  <select id="evaluador" disabled><option value="">Tu nombre</option></select>
   <button class="btn-refresh" id="btnRefresh" title="Actualizar">🔄</button>
 </div>
 
@@ -125,18 +117,27 @@ option{background:var(--panel);color:var(--txt);font-size:var(--input-size)}
     <div id="emptyMsg" class="empty">Selecciona curso y tu nombre para comenzar</div>
   </div>
 </div>
+
+<!-- ✅ PANEL DE PROGRESO -->
+<div id="progresoPanel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-md)">
+    <strong style="font-size:13px">📊 Progreso: <span id="progresoTexto">0/0</span></strong>
+    <button id="btnRefreshProgreso" style="background:#475569;border:none;border-radius:6px;color:#fff;font-size:12px;padding:6px 12px;cursor:pointer">🔄 Actualizar</button>
+  </div>
+  <div id="progresoLista"></div>
+</div>
+
 <div class="footer-note">Desarrollado por Carlos Felipe Sepúlveda — 2026</div>
 <div class="footer"><button class="btn-send" id="btnSend" disabled>📤 ENVIAR</button></div>
 <div id="toast"></div>
 
 <script>
-// ✅ CONFIGURACIÓN - TU URL
 const WEBHOOK = "https://script.google.com/macros/s/AKfycbwuyb1FnAw__SIz-JdAaZaBMaibY9jeAZuLwrBqRejnCypBur_zykBm6pLukjWTvG5u0g/exec";
 const KEY = "sociograma_pendientes";
 const CURSOS = ["3°A","3°B","3°C","4°A","4°B","4°C","5°A","5°B","5°C","6°A","6°B","6°C","7°A","7°B","7°C","8°A","8°B","8°C","I°A","I°B","I°C","II°A","II°B","II°C","III°A","III°B","III°C","IV°A","IV°B","IV°C"];
 
 let cache = {}, evaluaciones = {}, evaluadorActual = null, rolSaved = localStorage.getItem("doc_rol") || "";
-let FORZAR = false, cursoActual = null;
+let FORZAR = false, cursoActual = null, modoProgreso = false;
 
 const cursoSel = document.getElementById("curso");
 const evaluadorSel = document.getElementById("evaluador");
@@ -146,11 +147,9 @@ const studList = document.getElementById("studList");
 const emptyMsg = document.getElementById("emptyMsg");
 const btnRefresh = document.getElementById("btnRefresh");
 
-// ✅ TUS FUNCIONES ORIGINALES
 function limpiarNombre(n){ if(!n) return ""; return decodeURIComponent(n.replace(/\+/g," ")).trim() }
 function toast(msg,cls){ toastEl.textContent=msg; toastEl.className=cls?cls+" show":"show"; setTimeout(()=>toastEl.className="",2000) }
 
-// ✅ TU initCursos ORIGINAL
 function initCursos(){
   if(!cursoSel) return;
   while(cursoSel.options.length>1) cursoSel.remove(1);
@@ -159,11 +158,11 @@ function initCursos(){
 }
 initCursos();
 
-// ✅ TU change de curso + populateEvaluador
 cursoSel.addEventListener("change", async ()=>{
   if(!cursoSel.value) return;
   cursoActual = cursoSel.value;
-  evaluadorActual = null;
+  evaluadorActual = null; modoProgreso = false;
+  document.getElementById('progresoPanel').style.display = 'none';
   evaluadorSel.disabled = true; evaluadorSel.innerHTML = '<option value="">👤Tu nombre</option>';
   emptyMsg.classList.add("show"); studList.innerHTML = ""; btnSend.disabled = true;
   try{
@@ -176,7 +175,7 @@ cursoSel.addEventListener("change", async ()=>{
         cache[cursoSel.value] = lista;
         localStorage.setItem("lista_"+cursoSel.value, JSON.stringify(lista));
         populateEvaluador(lista);
-        toast(FORZAR ? "🔄 Actualizado" : "✅ Lista lista", "ok");
+        toast(FORZAR ? " Actualizado" : "✅ Lista lista", "ok");
         FORZAR = false; return;
       }
     }
@@ -194,34 +193,44 @@ cursoSel.addEventListener("change", async ()=>{
   }
 });
 
-// ✅ NUEVO: Llenar dropdown evaluador
 function populateEvaluador(estudiantes){
   evaluadorSel.innerHTML = '<option value="">👤Tu nombre</option>';
   estudiantes.forEach(est => {
     const opt = document.createElement("option");
     opt.value = JSON.stringify({id: est.id, nombre: est.nombre});
-    opt.textContent = `${est.id}. ${est.nombre}`; // ✅ Mostrar "N°Lista. Nombre"
+    opt.textContent = `${est.id}. ${est.nombre}`;
     evaluadorSel.appendChild(opt);
   });
+  // ✅ Opción "📊 Ver progreso" al final
+  const progOpt = document.createElement("option");
+  progOpt.value = "__PROGRESO__";
+  progOpt.textContent = "📊 Ver progreso del curso";
+  progOpt.style.fontWeight = "600";
+  progOpt.style.color = "#22c55e";
+  evaluadorSel.appendChild(progOpt);
   evaluadorSel.disabled = false;
 }
 
-// ✅ NUEVO: Cuando se selecciona evaluador
 evaluadorSel.addEventListener("change", ()=>{
   const val = evaluadorSel.value;
-  if(!val) { evaluadorActual = null; renderList(); check(); return; }
+  if (val === "__PROGRESO__") {
+    modoProgreso = !modoProgreso;
+    document.getElementById('progresoPanel').style.display = modoProgreso ? 'block' : 'none';
+    if (modoProgreso && cursoActual) cargarProgreso();
+    evaluadorSel.value = evaluadorActual ? JSON.stringify(evaluadorActual) : "";
+    return;
+  }
+  if (!val) { evaluadorActual = null; renderList(); check(); return; }
   evaluadorActual = JSON.parse(val);
   renderList(); check();
 });
 
-// ✅ TU BOTÓN 🔄 ORIGINAL
 btnRefresh.addEventListener("click", ()=>{
   if(!cursoSel.value){ toast("Selecciona un curso primero","warn"); return }
   FORZAR = true;
   cursoSel.dispatchEvent(new Event("change"));
 });
 
-// ✅ TU renderList + columna N° + radio buttons A-E con colores
 function renderList(){
   const estudiantes = cache[cursoActual] || [];
   if(!estudiantes.length){ emptyMsg.classList.add("show"); studList.innerHTML=""; return; }
@@ -246,16 +255,14 @@ function renderList(){
 
 function onSelect(id, nombre, calificacion){ evaluaciones[id] = { id, nombre, calificacion }; check(); }
 
-// ✅ TU check + validar todos (incluido uno mismo)
 function check(){
-  if(!cursoSel.value || !evaluadorSel.value){ btnSend.disabled = true; return; }
+  if(!cursoSel.value || !evaluadorSel.value || evaluadorSel.value === "__PROGRESO__"){ btnSend.disabled = true; return; }
   const estudiantes = cache[cursoActual] || [];
   if(!estudiantes.length){ btnSend.disabled = true; return; }
   const allSelected = estudiantes.every(est => evaluaciones[est.id]?.calificacion);
   btnSend.disabled = !allSelected;
 }
 
-// ✅ TU btnSend + incluir evaluador en payload
 btnSend.addEventListener("click", ()=>{
   if(btnSend.disabled) return;
   const estudiantes = cache[cursoActual] || [];
@@ -273,7 +280,6 @@ btnSend.addEventListener("click", ()=>{
   if(navigator.onLine) sincronizarEnSegundoPlano();
 });
 
-// ✅ TU reset + limpiar evaluador
 function reset(){
   evaluadorActual = null;
   evaluaciones = {};
@@ -283,17 +289,16 @@ function reset(){
   emptyMsg.textContent = "Selecciona curso y tu nombre para comenzar";
   emptyMsg.classList.add("show");
   btnSend.disabled = true;
+  document.getElementById('progresoPanel').style.display = 'none';
   initCursos();
 }
 
-// ✅ TU sincronizarEnSegundoPlano ORIGINAL (ESTE ES EL QUE FUNCIONA)
 async function sincronizarEnSegundoPlano(){
   let cola = JSON.parse(localStorage.getItem(KEY)||"[]");
   if(!cola.length) return;
   const ok=[];
   for(let i=0;i<cola.length;i++){
     try{
-      // ✅ TU MÉTODO ORIGINAL DE ENVÍO (CON ESPACIO DESPUÉS DE 'data:')
       const res = await fetch(WEBHOOK, {
         method:"POST",
         headers:{"Content-Type":"application/x-www-form-urlencoded"},
@@ -304,6 +309,58 @@ async function sincronizarEnSegundoPlano(){
   }
   if(ok.length){ cola = cola.filter((_,idx)=>!ok.includes(idx)); localStorage.setItem(KEY, JSON.stringify(cola)); }
 }
+
+// ✅ FUNCIONES DE PROGRESO (MUESTRA NOMBRE EXACTO GUARDADO EN RESPUESTAS)
+async function cargarProgreso() {
+  if (!cursoActual) return;
+  const panel = document.getElementById('progresoLista');
+  const texto = document.getElementById('progresoTexto');
+  panel.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted)">Cargando...</div>';
+  
+  try {
+    const url = WEBHOOK + "?action=getProgreso&curso=" + encodeURIComponent(cursoActual) + "&t=" + Date.now();
+    const r = await fetch(url, { cache: "no-store" });
+    const d = await r.json();
+    
+    if (!d.success) throw new Error(d.error);
+    
+    const estudiantes = cache[cursoActual] || [];
+    if (!estudiantes.length) {
+      panel.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted)">Sin estudiantes</div>';
+      texto.textContent = '0/0';
+      return;
+    }
+    
+    const respondidosMap = d.respondidos || {};  // {12: "Maria Perez", 15: "Juan Gomez"}
+    const respondidosIds = Object.keys(respondidosMap).map(Number);
+    const total = estudiantes.length;
+    const completados = estudiantes.filter(e => respondidosIds.includes(Number(e.id))).length;
+    
+    texto.textContent = `${completados}/${total}`;
+    
+    panel.innerHTML = estudiantes.map(est => {
+      const idNum = Number(est.id);
+      const nombreGuardado = respondidosMap[idNum]; // ✅ Nombre real usado en el formulario
+      const checked = respondidosIds.includes(idNum);
+      
+      return `
+      <div style="display:flex;align-items:center;gap:4px;background:${checked?'rgba(34,197,94,0.15)':'rgba(51,65,85,0.3)'};padding:4px 6px;border-radius:4px;font-size:11px">
+        <input type="checkbox" ${checked?'checked':''} disabled style="accent-color:#22c55e">
+        <span style="${checked?'color:#22c55e;font-weight:600':''}">
+          ${est.id}. ${nombreGuardado || est.nombre}  ${!nombreGuardado && checked ? '️' : ''}
+        </span>
+      </div>`;
+    }).join('');
+    
+  } catch (err) {
+    panel.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#f87171">Error: ${err.message}</div>`;
+  }
+}
+
+document.getElementById('btnRefreshProgreso').addEventListener('click', () => {
+  if (cursoActual) cargarProgreso();
+});
+
 window.addEventListener("online", ()=>{ toast("🌐 Conexión restaurada. Sincronizando...","ok"); sincronizarEnSegundoPlano() });
 if(navigator.onLine) sincronizarEnSegundoPlano();
 </script>
